@@ -18,3 +18,21 @@ Required Libraries
  sudo gem install rtaglib 
 
 
+
+Initial Import
+
+
+-Configure the database
+  
+  config/database.yml
+
+
+-Create the tables
+ 
+  rake db:migrate
+
+-Run scan_files on your directory
+
+  script/scan_files.rb path-to-mp3s
+
+
