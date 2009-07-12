@@ -1,0 +1,20 @@
+Required Libraries
+
+-Ruby
+
+
+-Rails (installed via rubygems instead of apt)
+
+  sudo gem install rails
+
+
+-TagLib library and headers for compiling against C bindings 
+
+ libtag1c2a - TagLib Audio Meta-Data Library
+ libtagc0-dev - TagLib Audio Meta-Data Library (C bindings) [development]
+
+-TagLib ruby wrapper (installed via rubygems instead of apt)
+
+ sudo gem install rtaglib 
+
+

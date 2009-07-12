@@ -1,0 +1,43 @@
+<p>
+  <b>Path:</b>
+  <%=h @recording.path %>
+</p>
+
+<p>
+  <b>File:</b>
+  <%=h @recording.file %>
+</p>
+
+<p>
+  <b>Album:</b>
+  <%=h @recording.album %>
+</p>
+
+<p>
+  <b>Artist:</b>
+  <%=h @recording.artist %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @recording.title %>
+</p>
+
+<p>
+  <b>Genre:</b>
+  <%=h @recording.genre %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%=h @recording.year %>
+</p>
+
+<p>
+  <b>Track:</b>
+  <%=h @recording.track %>
+</p>
+
+
+<%= link_to 'Edit', edit_recording_path(@recording) %> |
+<%= link_to 'Back', recordings_path %>
