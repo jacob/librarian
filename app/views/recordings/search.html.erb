@@ -1,0 +1,46 @@
+
+<h2>Search Recordings</h2>
+<form method='post' action='<%= search_url %>'>
+
+  Choose  <%= select_tag "search_type", "<option>artist</option><option>album</option><option>title</option><option>file</option>" %>
+
+  <input type='text' name='searchargs' /> 
+
+  <input type='submit' value='search'/>
+
+</form>
+
+
+<% if @recordings %>
+
+<h2><%= @recordings.size %> Results</h2>
+
+<table>
+  <tr>
+    <th>Artist</th>
+    <th>Album</th>
+    <th>Title</th>
+    <th>Track</th>
+    <th>Genre</th>
+    <th>Year</th>
+    <th>File</th>
+    <th>Path</th>
+  </tr>
+
+<% @recordings.each do |recording| %>
+  <tr>
+    <td><%=h recording.artist %></td>
+    <td><%=h recording.album %></td>
+    <td><%=h recording.title %></td>
+    <td><%=h recording.track %></td>
+    <td><%=h recording.genre %></td>
+    <td><%=h recording.year %></td>
+    <td><%=h recording.file %></td>
+    <td><%=h recording.path %></td>
+    <td><%= link_to 'Show', recording %></td>
+  </tr>
+<% end %>
+</table>
+
+
+<% end %>

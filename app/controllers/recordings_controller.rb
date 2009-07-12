@@ -1,4 +1,16 @@
 class RecordingsController < ApplicationController
+  protect_from_forgery :only => [:create, :update, :destroy] 
+
+  def search    
+    if request.post?
+      @recordings = []
+      @search_args = params["searchargs"]
+      @search_field = params["search_type"]
+      @recordings = Recording.find(:all, :conditions => ["#{@search_field} ~* ?",@search_args])
+    end
+  end
+
+
   # GET /recordings
   # GET /recordings.xml
   def index
