@@ -3,8 +3,8 @@
 Librarian is a utility for scanning a collection of audio files on
 disk and importing their tag data into a database. 
 
-Librarian uses the ruby wrapper for taglib
-(http://rtaglib.rubyforge.org/) to parse tags in mp3, flac & ogg
+Librarian uses the ruby wrapper for taglib, documentation at
+http://rtaglib.rubyforge.org , to parse tags in mp3, flac & ogg
 files. Tag data is extracted to a single unnormalized table with these
 columns: path, file, album, artist, title, genre, year, track.
 
