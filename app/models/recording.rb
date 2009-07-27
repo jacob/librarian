@@ -7,27 +7,22 @@ class Recording < ActiveRecord::Base
 
 
   def self.acceptable_recording?(path)
-    return false unless File.readable?(path)
+    return false if File.basename(path) =~ /^\./
     return false unless path =~ /\.(mp3|flac|ogg)$/i
     true
   end
 
   def self.import_directory(path,refresh=false)
     filename = File.basename(path)
-    return false if ['..','.'].include?(filename)
 
     raise "could not find directory to import #{path}" unless File.directory?(path)
     puts "#{path}" if defined?(REPORT_PROGRESS)
 
     Find.find(path) do |filepath|
       if File.directory?(filepath)
-        puts "Scanning Directory :#{filepath}:"
-        #self.import_directory(filepath,refresh)      
-        next
+        puts "Scanning Directory :#{filepath}:"        
       elsif self.acceptable_recording?(filepath)
-        puts "fileoath : #{filepath} readable? #{File.readable?(filepath)}"
-        #raise 'b' if filepath =~ /^\./
-        #self.import_file(filepath,refresh)
+        self.import_file(filepath,refresh)
       end
 
     end
@@ -59,10 +54,11 @@ class Recording < ActiveRecord::Base
     raise "No cmd found for id3tag" unless `which #{TAGCMD}`
     cmd = "#{TAGCMD} #{path}"
     rec.raw_tag_info = %x{ #{cmd} }
+    puts "RAW TAG IS #{rec.raw_tag_info.inspect}"
     
 
     tag = self.get_hash_from_raw_id3_tag(rec.raw_tag_info)
-
+    puts "TAG IS #{tag.inspect}"
 
     rec.album = tag[:album]
     rec.artist = tag[:artist]
