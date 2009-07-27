@@ -52,9 +52,8 @@ class Recording < ActiveRecord::Base
 
     # Hullo, what? id3tag
     raise "No cmd found for id3tag" unless `which #{TAGCMD}`
-    cmd = "#{TAGCMD} #{path}"
+    cmd = "#{TAGCMD} #{path.gsub(' ','\ ')}"
     rec.raw_tag_info = %x{ #{cmd} }
-    puts "RAW TAG IS #{rec.raw_tag_info.inspect}"
     
 
     tag = self.get_hash_from_raw_id3_tag(rec.raw_tag_info)
