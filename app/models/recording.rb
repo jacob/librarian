@@ -57,14 +57,21 @@ class Recording < ActiveRecord::Base
     #end
 
     rec.updated_at = Time.now # force updated_at even if tag data is unchanged
-    rec.save!
+    begin
+      rec.save!
+    rescue Exception => e
+      RAILS_DEFAULT_LOGGER.error e.log_formatted
+      puts "VVVVV=========ERROR==========VVVVVV"
+      puts e.log_formatted
+      puts "^^^^^==========ERROR==========^^^^^"
+    end
 
     tag_hash = nil
   end
 
   def raw_tag_info=(val)
     arr = val.split("\n")
-    arr.delete_if {|x| x.match("APIC")}
+    arr.delete_if {|x| x.match("APIC") || x.match("POPM")}
     self[:raw_tag_info] = arr.join("\n")
   end
 

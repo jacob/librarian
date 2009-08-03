@@ -1,3 +1,5 @@
+require "open3"
+require 'iconv'
 
 class Identifier
 
@@ -10,14 +12,21 @@ class Identifier
   end
 
   def self.exec_identifier_cmd(filepath)
-    cmd = %Q!#{TAGCMD} #{filepath.gsub(' ','\ ').gsub('&','*')} !  #TODO fix escaping hack for &
-    #puts "running " + %x{ echo #{cmd} }
-    %x{ #{cmd} }
+    stdin, stdout, stderr = Open3.popen3(TAGCMD, filepath)
+    ret = stdout.readlines
+    stdin, stdout, stderr = [nil,nil,nil]
+    ret.each_index  do |i|
+      begin 
+        ret[i] = Iconv.conv('utf-8', 'utf-8', ret[i])
+      rescue Iconv::IllegalSequence => e    
+        ret[i] = e.success
+      end 
+    end
+    ret 
   end
 
-  def self.get_hash_from_raw_id3_tag(val)
-    ret = {:raw_results_string => val}
-    arr = val.split('===')
+  def self.get_hash_from_raw_id3_tag(arr)
+    ret = {:raw_results_string => arr.join("")}
 
     #album
     if row = arr.detect {|x| x =~ /(Album|Movie|Show)/i }

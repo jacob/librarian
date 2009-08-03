@@ -10,7 +10,7 @@ class IdentifierTest < ActiveSupport::TestCase
 
   test "ensure we get some smoke from identifier command" do
     smoke = Identifier.exec_identifier_cmd(File.join(File.dirname(__FILE__) + "/../test_helper.rb"))
-    assert_match /tag information/i, smoke
+    assert_match /tag information/i, smoke.join
   end
 
   test "identify all recordings in example file directory" do

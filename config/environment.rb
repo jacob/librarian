@@ -40,3 +40,11 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+
+class Exception
+  def log_formatted
+    "#{self.class.to_s} #{self.message}:\n #{self.backtrace.join("\n\t")}"
+  end
+end
+
