@@ -8,15 +8,9 @@ Required Libraries
   sudo gem install rails
 
 
--TagLib library and headers for compiling against C bindings 
+-id3info command line program for getting tags from mp3 files
 
- libtag1c2a - TagLib Audio Meta-Data Library
- libtagc0-dev - TagLib Audio Meta-Data Library (C bindings) [development]
-
--TagLib ruby wrapper (installed via rubygems instead of apt)
-
- sudo gem install rtaglib 
-
+  sudo apt-get install libid3-3.8.3-dev
 
 
 Initial Import
@@ -24,7 +18,7 @@ Initial Import
 
 -Configure the database
   
-  config/database.yml
+  edit the development stanza of config/database.yml to point to your database
 
 
 -Create the tables
@@ -34,5 +28,4 @@ Initial Import
 -Run scan_files on your directory
 
   script/scan_files.rb path-to-mp3s
-
 
