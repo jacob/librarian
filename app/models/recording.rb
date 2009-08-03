@@ -34,13 +34,13 @@ class Recording < ActiveRecord::Base
     puts "   #{path}" if defined?(REPORT_PROGRESS)
 
     #check if file exists in db
-    rec = Recording.find_by_file_and_path(filename,dirpath)
+    rec = Recording.find_by_file_and_path(filename.smash_to_utf8, dirpath.smash_to_utf8)
     if rec
       return rec if !refresh
     else
       rec = Recording.new 
-      rec.path = dirpath 
-      rec.file = filename
+      rec.path = dirpath.smash_to_utf8
+      rec.file = filename.smash_to_utf8
     end
 
 

@@ -16,11 +16,7 @@ class Identifier
     ret = stdout.readlines
     stdin, stdout, stderr = [nil,nil,nil]
     ret.each_index  do |i|
-      begin 
-        ret[i] = Iconv.conv('utf-8', 'utf-8', ret[i])
-      rescue Iconv::IllegalSequence => e    
-        ret[i] = e.success
-      end 
+      ret[i] = ret[i].smash_to_utf8
     end
     ret 
   end

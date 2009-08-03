@@ -48,3 +48,12 @@ class Exception
   end
 end
 
+class String
+  def smash_to_utf8
+    begin 
+      Iconv.conv('utf-8', 'utf-8', self)
+    rescue Iconv::IllegalSequence => e    
+      e.success
+    end 
+  end
+end
