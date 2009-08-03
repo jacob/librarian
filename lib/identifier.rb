@@ -10,8 +10,8 @@ class Identifier
   end
 
   def self.exec_identifier_cmd(filepath)
-    cmd = %Q!#{TAGCMD} '#{filepath.gsub(' ','\ ')}'!
-    puts "running cmd #{cmd}"
+    cmd = %Q!#{TAGCMD} #{filepath.gsub(' ','\ ').gsub('&','*')} !  #TODO fix escaping hack for &
+    #puts "running " + %x{ echo #{cmd} }
     %x{ #{cmd} }
   end
 
