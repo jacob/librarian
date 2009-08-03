@@ -13,7 +13,7 @@ class Recording < ActiveRecord::Base
     filename = File.basename(path)
 
     raise "could not find directory to import #{path}" unless File.directory?(path)
-    puts "#{path}" if defined?(REPORT_PROGRESS)
+    puts "#{path.sub(REPORT_PROGRESS,'')}" if defined?(REPORT_PROGRESS)
 
     Find.find(path) do |filepath|
       if File.directory?(filepath)
@@ -31,7 +31,7 @@ class Recording < ActiveRecord::Base
     dirpath = File.dirname(path)
     raise "could not find file to import #{path}" unless File.readable?(path)
 
-    puts "   #{path}" if defined?(REPORT_PROGRESS)
+    puts "   #{path.sub(REPORT_PROGRESS,'')}" if defined?(REPORT_PROGRESS)
 
     #check if file exists in db
     rec = Recording.find_by_file_and_path(filename.smash_to_utf8, dirpath.smash_to_utf8)

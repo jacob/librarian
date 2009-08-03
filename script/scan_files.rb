@@ -21,7 +21,7 @@ RAILS_ENV = ENV['RAILS_ENV'] ||= 'development'
 RAILS_ROOT = File.expand_path(File.dirname(__FILE__) + '/../')
 require RAILS_ROOT + '/config/environment'
 
-REPORT_PROGRESS = true
+REPORT_PROGRESS = startpoint
 start_time = Time.now
 
 #do the scan
