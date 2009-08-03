@@ -1,10 +1,7 @@
-#require 'TagLib'
 require 'find'
+#alas, taglib...   require 'TagLib'
 
 class Recording < ActiveRecord::Base
-
-  TAGCMD = 'id3info' unless defined?(TAGFCMD)
-
 
   def self.acceptable_recording?(path)
     return false if File.basename(path) =~ /^\./
@@ -46,27 +43,13 @@ class Recording < ActiveRecord::Base
       rec.file = filename
     end
 
-    # Alas, TagLib...
-    #tagref = TagLib::FileRef.new(path)
-    #tag = tagref.tag
 
-    # Hullo, what? id3tag
-    raise "No cmd found for id3tag" unless `which #{TAGCMD}`
-    cmd = "#{TAGCMD} #{path.gsub(' ','\ ')}"
-    rec.raw_tag_info = %x{ #{cmd} }
-    
+    tag_hash = Identifier.tags_for(path)
+    rec.raw_tag_info = tag_hash[:raw_results_string]
 
-    tag = self.get_hash_from_raw_id3_tag(rec.raw_tag_info)
-    puts "TAG IS #{tag.inspect}"
-
-    rec.album = tag[:album]
-    rec.artist = tag[:artist]
-    rec.title = tag[:title]
-    #rec.artist = (tag.artist && !tag.artist.empty?) ? tag.artist : nil
-    #rec.title = (tag.title && !tag.title.empty?) ? tag.title : nil
-    #rec.genre = (tag.genre && !tag.genre.empty?) ? tag.genre : nil
-    #rec.year = (tag.year && tag.year > 0) ? tag.year : nil
-    #rec.track = (tag.track && tag.track > 0) ? tag.track : nil
+    rec.album = tag_hash[:album]
+    rec.artist = tag_hash[:artist]
+    rec.title = tag_hash[:title]
 
     #DEBUG
     #if album
@@ -76,45 +59,13 @@ class Recording < ActiveRecord::Base
     rec.updated_at = Time.now # force updated_at even if tag data is unchanged
     rec.save!
 
-    tag = nil
-    # tagref = nil
-  end
-
-  def self.get_hash_from_raw_id3_tag(val)
-    ret = {}
-    arr = val.split('===')
-
-    #album
-    if row = arr.detect {|x| x =~ /(Album|Movie|Show)/i }
-      album = row.split('):').last.to_s.strip
-      if album && !album.strip.empty?
-        ret[:album] = album
-      end
-    end
-
-    #artist
-    if row = arr.detect {|x| x =~ /Lead.performer/i }
-      artist = row.split('):').last.to_s.strip
-      if artist && !artist.strip.empty?
-        ret[:artist] = artist
-      end
-    end
-
-    #title
-    if row = arr.detect {|x| x =~ /Title.songname/i }
-      title = row.split('):').last.to_s.strip
-      if title && !title.strip.empty?
-        ret[:title] = title
-      end
-    end
-
-    ret
+    tag_hash = nil
   end
 
   def raw_tag_info=(val)
-    arr = val.split('===')
+    arr = val.split("\n")
     arr.delete_if {|x| x.match("APIC")}
-    self[:raw_tag_info] = arr.join('===')
+    self[:raw_tag_info] = arr.join("\n")
   end
 
 end

@@ -9,3 +9,4 @@ config/database.yml
 db/schema.*
 tmp/[^.]*
 log/[^.]*
+test/example_files/[^.]*
