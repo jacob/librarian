@@ -1,5 +1,4 @@
 require 'find'
-#alas, taglib...   require 'TagLib'
 
 class Recording < ActiveRecord::Base
 
@@ -51,11 +50,6 @@ class Recording < ActiveRecord::Base
     rec.artist = tag_hash[:artist]
     rec.title = tag_hash[:title]
 
-    #DEBUG
-    #if album
-    #  puts "album: #{album}  artist: #{artist} title: #{title} genre: #{genre} year: #{year} track: #{track}"
-    #end
-
     rec.updated_at = Time.now # force updated_at even if tag data is unchanged
     begin
       rec.save!
@@ -64,6 +58,7 @@ class Recording < ActiveRecord::Base
       puts "VVVVV=========ERROR==========VVVVVV"
       puts e.log_formatted
       puts "^^^^^==========ERROR==========^^^^^"
+      # :P
     end
 
     tag_hash = nil

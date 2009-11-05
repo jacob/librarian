@@ -11,16 +11,6 @@ class Identifier
     get_hash_from_raw_id3_tag( exec_identifier_cmd(filepath) )
   end
 
-  def self.exec_identifier_cmd(filepath)
-    stdin, stdout, stderr = Open3.popen3(TAGCMD, filepath)
-    ret = stdout.readlines
-    stdin, stdout, stderr = [nil,nil,nil]
-    ret.each_index  do |i|
-      ret[i] = ret[i].smash_to_utf8
-    end
-    ret 
-  end
-
   def self.get_hash_from_raw_id3_tag(arr)
     ret = {:raw_results_string => arr.join("")}
 
@@ -49,6 +39,16 @@ class Identifier
     end
 
     ret
+  end
+
+  def self.exec_identifier_cmd(filepath)
+    stdin, stdout, stderr = Open3.popen3(TAGCMD, filepath)
+    ret = stdout.readlines
+    stdin, stdout, stderr = [nil,nil,nil] #try to trigger garbage collection
+    ret.each_index  do |i|
+      ret[i] = ret[i].smash_to_utf8
+    end
+    ret 
   end
 
 end
