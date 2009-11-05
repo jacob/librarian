@@ -1,10 +1,18 @@
 Librarian does these things:
 
+TODO--Add a Repository 
+TODO--Update a Repository
+
+
+--Verify Recordings (check that everything in the db still exists on disk, delete bad entries)
+  Example: script/verify_recordings.rb
+
+
 --Scan a Directory (takes an arbitrary dir and scans it for new recordings)
   Example:  script/scan_files.rb /home/jacob/music/
 
 
---Add recording (imports a file to the db as a possibly new recording)
+--Add a Recording (imports a file to the db as a possibly new recording)
   Example: script/scan_file.rb /home/jacob/music/some-recording-artist/some-album/01_-_Mississippi.ogg
 
 

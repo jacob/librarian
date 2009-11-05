@@ -7,7 +7,7 @@ class RecordingsController < ApplicationController
       @search_args = params["searchargs"]
       @search_field = params["search_type"]
       @search_field = 'file' unless %W{ artist album title file }.include? @search_field
-      @recordings = Recording.find(:all, :conditions => ["#{@search_field} ~* ?",@search_args])
+      @recordings = Recording.active.find(:all, :conditions => ["#{@search_field} ~* ?",@search_args])
     end
   end
 

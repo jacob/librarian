@@ -26,7 +26,7 @@ require RAILS_ROOT + '/config/environment'
 start_time = Time.now
 
 #do the search
-recordings = Recording.find(:all, :conditions => ["#{search_field} ~* ?",search_term])
+recordings = Recording.active.find(:all, :conditions => ["#{search_field} ~* ?",search_term])
 
 stop_time = Time.now
 

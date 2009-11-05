@@ -3,10 +3,27 @@ require 'uri'
 
 class Recording < ActiveRecord::Base
 
+  named_scope :active, :conditions => {:deleted => false}
+  
   def self.acceptable_recording?(path)
     return false if File.basename(path) =~ /^\./
     return false unless path =~ /\.(mp3|flac|ogg)$/i
     true
+  end
+
+  def mark_as_deleted!
+    self.deleted = true
+    self.deleted_at = Time.now
+    self.save!
+  end
+
+  def self.verify_files_exist!    
+    Recording.active.each do |rec| #note that this is not paginated and will cause memory bloat
+      unless File.readable?(rec.full_path)
+        puts "#{rec.title} is gone!"
+        rec.mark_as_deleted!
+      end
+    end
   end
 
   def self.import_directory(path,refresh=false)
@@ -71,6 +88,10 @@ class Recording < ActiveRecord::Base
     self[:raw_tag_info] = arr.join("\n")
   end
 
+  def full_path
+    File.join(path, file)
+  end
+
   def escaped_path
     path.split('/').map {|item| URI.escape(item)}.join('/')
   end
@@ -78,5 +99,7 @@ class Recording < ActiveRecord::Base
   def url
     "ftp://example.com" + escaped_path + '/' + URI.escape(file)
   end
+
+
 
 end
