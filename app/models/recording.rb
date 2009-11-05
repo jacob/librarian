@@ -1,4 +1,5 @@
 require 'find'
+require 'uri'
 
 class Recording < ActiveRecord::Base
 
@@ -68,6 +69,14 @@ class Recording < ActiveRecord::Base
     arr = val.split("\n")
     arr.delete_if {|x| x.match("APIC") || x.match("POPM")}
     self[:raw_tag_info] = arr.join("\n")
+  end
+
+  def escaped_path
+    path.split('/').map {|item| URI.escape(item)}.join('/')
+  end
+
+  def url
+    "ftp://example.com" + escaped_path + '/' + URI.escape(file)
   end
 
 end

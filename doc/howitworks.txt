@@ -1,19 +1,21 @@
 Librarian does these things:
 
---Query Dir (takes an arbitrary dir and scans it for new recordings)
+--Scan a Directory (takes an arbitrary dir and scans it for new recordings)
+  Example:  script/scan_files.rb /home/jacob/music/
 
---Add recording (imports a file to the db as a (possibly) new recording)
 
-
---Update (check dir INCOMING)    
-  Hook this up to a cron job at 5 minute intervals.
+--Add recording (imports a file to the db as a possibly new recording)
+  Example: script/scan_file.rb /home/jacob/music/some-recording-artist/some-album/01_-_Mississippi.ogg
 
 
 --Search for a recording
+  Example: script/search.rb artist 'freaky flow'
+  Example: script/search.rb album 'Obscene Underground'
+  Example: script/search.rb title "he's a flirt"
+  Example: script/search.rb file techno
 
---Get a download link to a recording
 
-
+FUTURE PLANS
 
 --Convert recording (generates preview copies of a file)
 
