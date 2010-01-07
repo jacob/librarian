@@ -1,12 +1,50 @@
-Librarian does these things:
+HOW LIBRARIAN WORKS:
 
 TODO--Add a Repository 
+  assert that no existing repository is inside new path or new path is not inside any existing repo
+  each recording belongs_to a repository
+  repository has a name, a path and a url
+  the name is case insensitive with no spaces or special characters
+
+  Example: script/add_repo.rb  MyMusic  /home/jacob/music  ftp://example.com/mymusic
+
+
+TODO--List Repositories
+
+  Example: script/list_repos.rb
+
+
+TODO--Delete a Repository
+   this deletes the repo and all the recordings stored inside of it. 
+   It may take a while since it deletes recordings in batches of 100.
+
+  Example: script/delete_repo.rb mymusic
+   
+
 TODO--Update a Repository
+   shortcut for scanning a repo's directory
+
+  Example: script/update_repo.rb mymusic
 
 
---Verify Recordings (check that everything in the db still exists on disk, delete bad entries)
-  Example: script/verify_recordings.rb
+--Search for a recording
+  Example: script/search.rb artist 'freaky flow'
+  Example: script/search.rb album 'Obscene Underground'
+  Example: script/search.rb title "he's a flirt"
+  Example: script/search.rb file techno
 
+
+TODO--The web service takes a json search query and returns a json collection of matching recordings.
+The search query looks like:  {'search':{'artist':'my band','album':'my album','title':'my song','file','my_song.mp3'}}
+The results look like: {'status':'success','results':[{'artist':'my band rocks','album':'','song':'','file':'my_song.mp3':'path':'/path/to/my_song.mp3':'url':'ftp://example.com/mymusic/my_song.mp3'},{etc..},{etc..}]}
+If there are no results the array is empty.
+   Example: script/server
+
+TODO--There is a reference implementation of a web interface which uses the web service via AJAX.
+   Example: the page "sample_app/search.html" is served by the search service by default
+
+
+UTILITY SCRIPTS:
 
 --Scan a Directory (takes an arbitrary dir and scans it for new recordings)
   Example:  script/scan_files.rb /home/jacob/music/
@@ -15,12 +53,9 @@ TODO--Update a Repository
 --Add a Recording (imports a file to the db as a possibly new recording)
   Example: script/scan_file.rb /home/jacob/music/some-recording-artist/some-album/01_-_Mississippi.ogg
 
+--Verify Recordings (check that everything in the db still exists on disk, delete bad entries)
+  Example: script/verify_recordings.rb
 
---Search for a recording
-  Example: script/search.rb artist 'freaky flow'
-  Example: script/search.rb album 'Obscene Underground'
-  Example: script/search.rb title "he's a flirt"
-  Example: script/search.rb file techno
 
 
 FUTURE PLANS
