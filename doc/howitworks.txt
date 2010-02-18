@@ -5,8 +5,17 @@ TODO--Add a Repository
   each recording belongs_to a repository
   repository has a name, a path and a url
   the name is case insensitive with no spaces or special characters
-
   Example: script/add_repo.rb  MyMusic  /home/jacob/music  ftp://example.com/mymusic
+
+
+TODO--Set Repository (set new repository information)
+  Example: script/set_repository.rb /home/jacob/music ftp://example.com
+   #writes to ~/.librarian-repository.yml
+
+
+TODO--Scan Repository (scans the repository for new recordings)
+  Example: script/scan_repository.rb
+   #reads from ~/.librarian-repository.yml
 
 
 TODO--List Repositories
