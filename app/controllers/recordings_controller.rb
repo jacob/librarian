@@ -15,7 +15,15 @@ class RecordingsController < ApplicationController
   # GET /recordings
   # GET /recordings.xml
   def index
-    @recordings = Recording.find(:all, :limit => 150, :order => 'created_at ASC')
+    if request.post?
+      @recordings = []
+      @search_args = params["searchargs"]
+      @search_field = params["search_type"].downcase
+      @search_field = 'file' unless %W{ artist album title file }.include? @search_field
+      @recordings = Recording.active.find(:all, :include => :repository, :conditions => ["#{@search_field} ~* ?",@search_args])
+    else
+      @recordings = Recording.find(:all, :include => :repository, :limit => 150, :order => 'created_at ASC')
+    end
 
     respond_to do |format|
       format.html # index.html.erb

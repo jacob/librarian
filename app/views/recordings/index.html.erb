@@ -1,5 +1,8 @@
 <h1>Listing recordings</h1>
 
+<% if defined?(@search_args) && (!@search_args.strip.empty?) %>
+  <p>Searching for <%= @search_field rescue nil %> <i><%= @search_args %></i></p>
+<% end %>
 
 <table>
   <tr>

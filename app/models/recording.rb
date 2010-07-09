@@ -47,6 +47,8 @@ class Recording < ActiveRecord::Base
     true
   end
 
+  ##TODO: this should take the file's created_at date for its own
+
   def self.import_file(repo,relative_path,refresh=false)
     path = repo.base_path + relative_path
     filename = File.basename(path)
