@@ -84,7 +84,7 @@ class Recording < ActiveRecord::Base
 
   def raw_tag_info=(val)
     arr = val.split("\n")
-    arr.delete_if {|x| x.match("APIC") || x.match("POPM")}
+    arr.delete_if {|x| x.match("APIC") || x.match("POPM")}  # exclude pesky binary fields
     self[:raw_tag_info] = arr.join("\n")
   end
 
@@ -97,9 +97,12 @@ class Recording < ActiveRecord::Base
   end
 
   def url
+    #TODO: replace this with the actual variable for the hostname
     "ftp://example.com" + escaped_path + '/' + URI.escape(file)
   end
 
-
+  def uploaded_at
+    created_at.strftime("%a %b %d %Y  %I:%M%p")
+  end
 
 end

@@ -11,6 +11,18 @@
 
 <p style="color: green"><%= flash[:notice] %></p>
 
+<div style='float:right;'>
+<form method='post' action='<%= search_url %>'>
+
+  Search  <%= select_tag "search_type", "<option>file</option><option>album</option><option>title</option><option>artist</option>" %>
+
+  <input type='text' name='searchargs' /> 
+
+  <input type='submit' value='search'/>
+
+</form>
+</div>
+
 <%= yield %>
 
 </body>

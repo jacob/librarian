@@ -15,7 +15,7 @@ class RecordingsController < ApplicationController
   # GET /recordings
   # GET /recordings.xml
   def index
-    @recordings = Recording.all
+    @recordings = Recording.find(:all, :limit => 150)
 
     respond_to do |format|
       format.html # index.html.erb

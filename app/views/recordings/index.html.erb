@@ -1,5 +1,6 @@
 <h1>Listing recordings</h1>
 
+
 <table>
   <tr>
     <th>Path</th>
@@ -7,18 +8,20 @@
     <th>Album</th>
     <th>Artist</th>
     <th>Title</th>
+    <th>Uploaded</th>
     <th>Genre</th>
     <th>Year</th>
     <th>Track</th>
   </tr>
 
 <% @recordings.each do |recording| %>
-  <tr>
+  <tr class="<%= recording.class.name.underscore %> <%= cycle("even", "odd") %>" >
     <td><%=h recording.path %></td>
     <td><%=h recording.file %></td>
     <td><%=h recording.album %></td>
     <td><%=h recording.artist %></td>
     <td><%=h recording.title %></td>
+    <td><%=h recording.uploaded_at %></td>
     <td><%=h recording.genre %></td>
     <td><%=h recording.year %></td>
     <td><%=h recording.track %></td>
