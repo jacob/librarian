@@ -12,6 +12,10 @@
     <%= @recording.file %>
   </p>
   <p>
+    <%= f.label :uploaded %><br />
+    <%= @recording.uploaded_at %>
+  </p>
+  <p>
     <%= f.label :album %><br />
     <%= f.text_field :album %>
   </p>

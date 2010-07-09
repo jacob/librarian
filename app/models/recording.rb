@@ -3,11 +3,13 @@ require 'uri'
 
 class Recording < ActiveRecord::Base
 
+  belongs_to :repository
+
   named_scope :active, :conditions => {:deleted => false}
   
   def self.acceptable_recording?(path)
     return false if File.basename(path) =~ /^\./
-    return false unless path =~ /\.(mp3|flac|ogg)$/i
+    return false unless path =~ /\.(mp3|flac|ogg|wav)$/i
     true
   end
 
@@ -102,7 +104,23 @@ class Recording < ActiveRecord::Base
   end
 
   def uploaded_at
-    created_at.strftime("%a %b %d %Y  %I:%M%p")
+    created_at.strftime("%m-%d-%Y--%I:%M%p")
+  end
+
+  def folder
+    path.split('/').last[0,40]
+  end
+
+  def file_ext
+    file.split('.').last
+  end
+
+  def file_abbrev(len=100)
+    if file.length > len
+      file[0,len-1] + "---(#{file_ext})"
+    else
+      file
+    end
   end
 
 end

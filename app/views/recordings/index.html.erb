@@ -3,31 +3,30 @@
 
 <table>
   <tr>
-    <th>Path</th>
+    <th>Folder</th>
     <th>File</th>
     <th>Album</th>
     <th>Artist</th>
     <th>Title</th>
-    <th>Uploaded</th>
-    <th>Genre</th>
+    <th>Label</th>
     <th>Year</th>
-    <th>Track</th>
+    <th>Uploaded</th>
   </tr>
 
 <% @recordings.each do |recording| %>
   <tr class="<%= recording.class.name.underscore %> <%= cycle("even", "odd") %>" >
-    <td><%=h recording.path %></td>
-    <td><%=h recording.file %></td>
+    <td><%=h recording.folder %></td>
+    <td><a href="ftp://<%= recording.repository.base_ftp %><%= recording.full_path %>">
+           <%=h recording.file_abbrev 40 %></a></td>
     <td><%=h recording.album %></td>
     <td><%=h recording.artist %></td>
     <td><%=h recording.title %></td>
-    <td><%=h recording.uploaded_at %></td>
-    <td><%=h recording.genre %></td>
+    <td><%=h recording.label %></td>
     <td><%=h recording.year %></td>
-    <td><%=h recording.track %></td>
-    <td><%= link_to 'Show', recording %></td>
+    <td><%=h recording.uploaded_at %></td>
+ <!--   <td><%= link_to 'Full', recording %></td> -->
     <td><%= link_to 'Edit', edit_recording_path(recording) %></td>
-    <td><%= link_to 'Destroy', recording, :confirm => 'Are you sure?', :method => :delete %></td>
+<!--    <td><%= link_to 'Destroy', recording, :confirm => 'Are you sure?', :method => :delete %></td> -->
   </tr>
 <% end %>
 </table>
