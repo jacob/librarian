@@ -16,8 +16,7 @@
 <% @recordings.each do |recording| %>
   <tr class="<%= recording.class.name.underscore %> <%= cycle("even", "odd") %>" >
     <td><%=h recording.folder %></td>
-    <td><a href="ftp://<%= recording.repository.base_ftp %><%= recording.full_path %>">
-           <%=h recording.file_abbrev 40 %></a></td>
+    <td><a href="<%= recording.ftp_url %>"><%=h recording.file_abbrev 40 %></a></td>
     <td><%=h recording.album %></td>
     <td><%=h recording.artist %></td>
     <td><%=h recording.title %></td>
