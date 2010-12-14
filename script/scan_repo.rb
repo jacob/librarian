@@ -20,15 +20,6 @@ unless File.directory?(repo.base_path) && File.readable?(repo.base_path)
   exit(-1)
 end
 
-# refuse to work if repo is a symlink (TODO FIX!!!)
-#unless File.symlink?(repo.base_path)
-#  puts "Error: repository can not be a symlink: #{repo.base_path}"
-#  exit(-1)
-#end
-
-
-# TODO: remove scan_files.rb and scan_file.rb
-
 #refreshing will re-read the ID3 tags for existing records
 refresh = false
 if ARGV[0] && 'force' == ARGV[0]
